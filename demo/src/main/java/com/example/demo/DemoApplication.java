@@ -22,9 +22,14 @@ public class DemoApplication {
     }
 
     @GetMapping("/")
-    public List<String> index()
-    {
-        return List.of("Hello", "World");
+    public ArrayResponse index() {
+        return new ArrayResponse("Hi", List.of("A", "B", "C"));
+    }
+
+    record ArrayResponse(
+            String greet,
+            List<String> names
+    ) {
     }
 
 }

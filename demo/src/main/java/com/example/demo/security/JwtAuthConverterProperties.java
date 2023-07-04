@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.security;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

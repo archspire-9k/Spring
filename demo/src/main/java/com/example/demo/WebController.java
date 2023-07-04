@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,11 @@ public class WebController {
         return "external";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws Exception {
+        request.logout();
+        return "redirect:/";
+    }
     @GetMapping(path = "/customers")
     public String customers(Principal principal, Model model) {
         addCustomers();

@@ -31,7 +31,7 @@ class SecurityConfig {
         http.authorizeHttpRequests(auth ->
                 auth
                         .requestMatchers("/customers*")
-                        .hasRole("USER")
+                        .hasRole("user")
                         .anyRequest()
                         .permitAll()
         );
@@ -39,7 +39,7 @@ class SecurityConfig {
                 .logout(logout ->
                         logout.addLogoutHandler(keycloakLogoutHandler)
                                 .logoutSuccessUrl("/"));
-        http.oauth2ResourceServer((oauth2ResourceServer) ->
+        http.oauth2ResourceServer(oauth2ResourceServer ->
         oauth2ResourceServer.jwt(Customizer.withDefaults())
         );
         return http.build();

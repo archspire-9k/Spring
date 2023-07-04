@@ -10,7 +10,7 @@ import java.security.Principal;
 @Controller
 public class WebController {
     @Autowired
-    private CustomerDAO customerDAO = null;
+    private CustomerDAO customerDAO;
     @GetMapping(path = "/")
     public String index() {
         return "external";

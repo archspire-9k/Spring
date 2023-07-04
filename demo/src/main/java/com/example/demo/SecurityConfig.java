@@ -16,11 +16,11 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 class SecurityConfig {
 
     private final KeycloakLogoutHandler keycloakLogoutHandler;
-
-    SecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler) {
+    private final JwtAuthConverter jwtAuthConverter;
+    SecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler, JwtAuthConverter jwtAuthConverter) {
         this.keycloakLogoutHandler = keycloakLogoutHandler;
+        this.jwtAuthConverter = jwtAuthConverter;
     }
-
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
@@ -28,12 +28,16 @@ class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth ->
-                auth
-                        .requestMatchers("/customers*")
-                        .hasRole("user")
-                        .anyRequest()
-                        .permitAll()
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth ->
+                {
+                    auth.requestMatchers("/customers*")
+                            .permitAll()
+                            .anyRequest()
+                            .hasRole("user");
+
+                }
         );
         http.oauth2Login(Customizer.withDefaults())
                 .logout(logout ->

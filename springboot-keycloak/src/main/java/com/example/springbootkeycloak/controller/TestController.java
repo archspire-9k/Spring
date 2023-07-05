@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/anonymous")
     public ResponseEntity<String> getAnonymous() {
-        return null;
+        return ResponseEntity.ok("Hello Anonymous");
     }
     @GetMapping("/admin")
     public ResponseEntity<String> getAdmin() {
-        return null;
+        return ResponseEntity.ok("Hello Admin");
     }
     @GetMapping("/user")
     public ResponseEntity<String> getUser() {
-        return null;
+        return ResponseEntity.ok("Hello User");
     }
 }

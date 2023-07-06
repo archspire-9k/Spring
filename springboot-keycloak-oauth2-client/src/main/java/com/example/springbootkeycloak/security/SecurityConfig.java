@@ -50,12 +50,13 @@ public class SecurityConfig {
             if (isOidc) {
                 var oidcUserAuthority = (OidcUserAuthority) authority;
                 var userInfo = oidcUserAuthority.getUserInfo();
-
+                logger.warn(userInfo.getClaims().toString());
                 if (userInfo.hasClaim("realm_access")) {
                     var realmAccess = userInfo.getClaimAsMap("realm_access");
                     var roles = (Collection<String>) realmAccess.get("roles");
                     mappedAuthorities.addAll(generateAuthoritiesFromClaim(roles));
                 }
+
             } else {
                 var oauth2UserAuthority = (OAuth2UserAuthority) authority;
                 Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
@@ -66,6 +67,8 @@ public class SecurityConfig {
                     mappedAuthorities.addAll(generateAuthoritiesFromClaim(roles));
                 }
             }
+            var test = mappedAuthorities.toString();
+            logger.warn(test);
             return mappedAuthorities;
         };
     }

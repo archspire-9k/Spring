@@ -14,9 +14,9 @@
 <body>
 <h1>Demo</h1>
 <div class="container unauthenticated">
-    With Keycloak: <a href="/user">click here</a>
+    With Keycloak: <a href="/test/user">click here</a>
 </div>
-<div class="container authenticated">
+<div class="container authenticated" style="display:none">
     Logged in as: <span id="user"></span>
     <div>
         <button onClick="logout()" class="btn btn-primary">Logout</button>
@@ -24,7 +24,7 @@
 </div>
 </body>
 <script type="text/javascript">
-    $.get("/test/user", function(data) {
+    $.get("/user", function(data) {
         $("#user").html(data.name);
         $(".unauthenticated").hide()
         $(".authenticated").show()

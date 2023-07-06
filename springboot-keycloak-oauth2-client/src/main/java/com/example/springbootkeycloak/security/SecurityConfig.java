@@ -12,27 +12,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    @Order
-    public SecurityFilterChain indexFilterChain(HttpSecurity http) throws Exception {
-        http
-                .securityMatcher("/", "/error")
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
-                        .anonymous()
-                );
-        return http.build();
-    }
-
 //    @Bean
-//    public SecurityFilterChain testFilterChain(HttpSecurity http) throws Exception {
+//    @Order
+//    public SecurityFilterChain indexFilterChain(HttpSecurity http) throws Exception {
 //        http
-//                .securityMatcher("/test/**")
+//                .securityMatcher("/error")
 //                .authorizeHttpRequests(auth -> auth
-//                        .anyRequest().authenticated()
+//                        .anyRequest()
+//                        .anonymous()
 //                );
-//        http.oauth2Login();
 //        return http.build();
 //    }
+
+    @Bean
+    public SecurityFilterChain testFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/test/**")
+                        .hasRole("user")
+                        .anyRequest()
+                        .permitAll()
+                );
+        http.oauth2Login(Customizer.withDefaults());
+        return http.build();
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.springbootkeycloak.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class RoleFinder {
+
+    Logger logger = LoggerFactory.getLogger(RoleFinder.class);
     @Bean
     public GrantedAuthoritiesMapper grantedAuthoritiesMapperForKeycloak() {
         return authorities -> {
@@ -26,7 +30,7 @@ public class RoleFinder {
             if (isOidc) {
                 var oidcUserAuthority = (OidcUserAuthority) authority;
                 var userInfo = oidcUserAuthority.getUserInfo();
-//                logger.warn(userInfo.getClaims().toString());
+                logger.warn(userInfo.getClaims().toString());
                 if (userInfo.hasClaim("realm_access")) {
                     var realmAccess = userInfo.getClaimAsMap("realm_access");
                     var roles = (Collection<String>) realmAccess.get("roles");
